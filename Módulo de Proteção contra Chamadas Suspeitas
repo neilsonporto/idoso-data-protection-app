@@ -1,0 +1,36 @@
+// CallProtectionActivity.kt
+class CallProtectionActivity : AppCompatActivity() {
+
+    private lateinit var callMonitor: CallMonitorService
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_call_protection)
+        
+        callMonitor = CallMonitorService(this)
+        
+        // Verifica chamadas recebidas
+        checkIncomingCalls()
+    }
+    
+    private fun checkIncomingCalls() {
+        callMonitor.checkRecentCalls { call ->
+            when {
+                call.isPotentialScam -> showScamAlert(call)
+                call.isUnknownNumber -> showUnknownNumberAlert(call)
+                else -> logSafeCall(call)
+            }
+        }
+    }
+    
+    private fun showScamAlert(call: CallRecord) {
+        AlertDialog.Builder(this)
+            .setTitle("Chamada suspeita detectada!")
+            .setMessage("O número ${call.number} está na lista de golpistas")
+            .setPositiveButton("Bloquear") { _, _ ->
+                callMonitor.blockNumber(call.number)
+            }
+            .setNegativeButton("Ignorar", null)
+            .show()
+    }
+}
