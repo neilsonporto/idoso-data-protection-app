@@ -1,0 +1,45 @@
+// MainActivity.kt
+package com.example.idosoprotection
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        
+        // Configuração de acessibilidade
+        setupAccessibility()
+        
+        // Botões principais
+        findViewById<Button>(R.id.btn_call_protection).setOnClickListener {
+            startActivity(Intent(this, CallProtectionActivity::class.java))
+        }
+        
+        findViewById<Button>(R.id.btn_bank_monitor).setOnClickListener {
+            startActivity(Intent(this, BankMonitorActivity::class.java))
+        }
+        
+        findViewById<Button>(R.id.btn_emergency).setOnClickListener {
+            triggerEmergencyProtocol()
+        }
+    }
+    
+    private fun setupAccessibility() {
+        // Aumenta tamanho de texto padrão
+        resources.configuration.fontScale = 1.2f
+        // Configurações de alto contraste podem ser adicionadas aqui
+    }
+    
+    private fun triggerEmergencyProtocol() {
+        // Envia mensagens para contatos de emergência
+        EmergencyHelper.sendEmergencyAlerts(this)
+        
+        // Também pode ligar para um número de emergência
+        EmergencyHelper.callEmergencyNumber(this)
+    }
+}
