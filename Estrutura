@@ -1,0 +1,14 @@
+idoso-data-protection-app/
+├── app/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/example/idosoprotection/
+│   │   │   │   ├── MainActivity.kt
+│   │   │   │   ├── CallProtectionActivity.kt
+│   │   │   │   └── ...
+│   │   │   └── res/
+│   │   │       ├── layout/
+│   │   │       ├── values/
+│   │   │       └── ...
+├── .gitignore (Android)
+└── README.md
