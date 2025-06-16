@@ -1,0 +1,11 @@
+<!-- res/values/styles.xml -->
+<style name="AppTheme.LargeText" parent="Theme.AppCompat.Light">
+    <item name="android:textSize">18sp</item>
+    <item name="android:buttonStyle">@style/LargeButton</item>
+</style>
+
+<style name="LargeButton" parent="Widget.AppCompat.Button">
+    <item name="android:textSize">20sp</item>
+    <item name="android:minHeight">60dp</item>
+    <item name="android:padding">16dp</item>
+</style>
