@@ -1,0 +1,8 @@
+# Inicialize o repositório Git
+git init
+
+# Conecte ao repositório remoto (substitua URL pela sua)
+git remote add origin https://github.com/seu-usuario/idoso-data-protection-app.git
+
+# Baixe as alterações iniciais (se houver README.md)
+git pull origin main
