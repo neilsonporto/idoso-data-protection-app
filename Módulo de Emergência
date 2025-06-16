@@ -1,0 +1,34 @@
+// EmergencyHelper.kt
+object EmergencyHelper {
+    
+    fun sendEmergencyAlerts(context: Context) {
+        val contacts = getEmergencyContacts(context)
+        val location = getCurrentLocation(context)
+        
+        contacts.forEach { contact ->
+            sendSMS(
+                context,
+                contact.number,
+                "ALERTA: ${contact.name} precisa de ajuda! Localização: $location"
+            )
+        }
+    }
+    
+    fun callEmergencyNumber(context: Context) {
+        val intent = Intent(Intent.ACTION_CALL).apply {
+            data = Uri.parse("tel:${getEmergencyNumber()}")
+        }
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.CALL_PHONE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            context.startActivity(intent)
+        }
+    }
+    
+    private fun getEmergencyContacts(context: Context): List<EmergencyContact> {
+        // Recupera da SharedPreferences ou banco de dados
+        return EmergencyContactPreference.load(context)
+    }
+}
