@@ -1,0 +1,37 @@
+// BankMonitorActivity.kt
+class BankMonitorActivity : AppCompatActivity() {
+
+    private val bankTransactionAnalyzer = BankTransactionAnalyzer()
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_bank_monitor)
+        
+        setupBankLinks()
+        monitorTransactions()
+    }
+    
+    private fun setupBankLinks() {
+        // Conexão segura com APIs bancárias
+        BankConnection.setup(this) { success ->
+            if (success) {
+                loadTransactionHistory()
+            } else {
+                showConnectionError()
+            }
+        }
+    }
+    
+    private fun monitorTransactions() {
+        bankTransactionAnalyzer.analyze { suspiciousTransactions ->
+            suspiciousTransactions.forEach { transaction ->
+                showTransactionAlert(transaction)
+            }
+        }
+    }
+    
+    private fun showTransactionAlert(transaction: Transaction) {
+        val alert = TransactionAlertDialog(this, transaction)
+        alert.show()
+    }
+}
